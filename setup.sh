@@ -223,6 +223,43 @@ if command -v launchctl &> /dev/null; then
   echo "✅ MCP_API_KEY configurada via launchctl (apps GUI)"
 fi
 
+# ===== Update Kiro MCP config with API key header =====
+KIRO_MCP_CONFIG="$HOME/.kiro/settings/mcp.json"
+
+if [ -f "$KIRO_MCP_CONFIG" ]; then
+  python3 -c "
+import json
+
+config_path = '$KIRO_MCP_CONFIG'
+api_key = '$API_KEY'
+
+with open(config_path, 'r') as f:
+    config = json.load(f)
+
+# Update power server entry
+powers = config.get('powers', {}).get('mcpServers', {})
+for key in powers:
+    if 'uds' in key and 'server.mcp.udstec.io' in powers[key].get('url', ''):
+        powers[key]['headers'] = {'x-api-key': api_key}
+        print(f'✅ Header x-api-key adicionado em powers.mcpServers.{key}')
+        break
+
+# Also update top-level mcpServers if exists
+servers = config.get('mcpServers', {})
+for key in servers:
+    if 'uds' in key and 'server.mcp.udstec.io' in servers[key].get('url', ''):
+        servers[key]['headers'] = {'x-api-key': api_key}
+        print(f'✅ Header x-api-key adicionado em mcpServers.{key}')
+
+with open(config_path, 'w') as f:
+    json.dump(config, f, indent=2)
+    f.write('\n')
+" 2>&1
+  echo "✅ Kiro MCP config atualizado em $KIRO_MCP_CONFIG"
+else
+  echo "⚠️  Arquivo $KIRO_MCP_CONFIG não encontrado. Configure manualmente o header x-api-key."
+fi
+
 echo ""
 echo "Configuração concluída!"
 echo ""

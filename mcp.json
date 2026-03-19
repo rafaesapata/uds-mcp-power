@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "uds-mcp-server": {
+    "mcp": {
       "type": "http",
       "url": "https://server.mcp.udstec.io/mcp",
       "autoApprove": [
@@ -9,7 +9,12 @@
         "mcp_aws_info",
         "uds_layout_standards",
         "uds_code_analysis",
-        "uds_dev_standards"
+        "uds_dev_standards",
+        "uds_no_mock_data",
+        "uds_autonomous_mode",
+        "uds_token_optimization",
+        "uds_gitlab_standards",
+        "test_quality_gates"
       ]
     }
   }

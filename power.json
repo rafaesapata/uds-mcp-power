@@ -1,7 +1,7 @@
 {
-  "name": "uds-mcp-server",
-  "displayName": "UDS MCP Server",
-  "version": "2.0.0",
+  "name": "uds",
+  "displayName": "Power-UDS",
+  "version": "2.1.0",
   "description": "Padrões de layout, análise de código e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
   "keywords": [
     "uds",
@@ -22,8 +22,10 @@
     "aws"
   ],
   "author": "UDS Tecnologia",
+  "icon": "icon.png",
+  "iconUrl": "https://app.mcp.udstec.io/assets/icon.png",
   "mcpServers": {
-    "uds-mcp-server": {
+    "mcp": {
       "type": "http",
       "url": "https://server.mcp.udstec.io/mcp"
     }
