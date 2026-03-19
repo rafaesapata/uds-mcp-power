@@ -1,3 +1,10 @@
+---
+name: "uds"
+displayName: "Power-UDS"
+description: "Padrões de código, layout, testes e análise inteligente da UDS Tecnologia — 18 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos e guias de CI/CD, Docker e AWS"
+keywords: ["uds", "padrões", "layout", "código", "análise", "desenvolvimento", "frontend", "backend", "react", "mobile", "segurança", "performance", "testes", "ci-cd", "docker", "aws"]
+---
+
 # UDS MCP Server
 
 MCP Server da UDS Tecnologia com padrões de layout, análise de código e desenvolvimento de software.
