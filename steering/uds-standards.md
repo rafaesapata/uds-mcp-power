@@ -4,6 +4,9 @@ inclusion: auto
 
 # UDS MCP Server — Guia de Uso
 
+## Repositório
+- GitHub: https://github.com/rafaesapata/uds-mcp-power
+
 ## Quando usar cada tool
 
 | Intenção | Tool | Tipo |
