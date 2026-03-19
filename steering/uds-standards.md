@@ -2,93 +2,59 @@
 inclusion: auto
 ---
 
-# UDS MCP Server — Guia Completo
+# UDS MCP Server — Guia de Uso
 
-## Mapeamento de intenção → tool
+## Quando usar cada tool
 
-| Intenção do usuário | Tool MCP |
-|---|---|
-| Padrões de código, code review, arquitetura, segurança, performance, testes | `uds_code_analysis` |
-| Padrões de projeto, CI/CD, documentação, error handling, logging, Docker, AWS | `uds_dev_standards` |
-| Layout, UI, componentes, frontend, mobile, API response | `uds_layout_standards` |
-| GitLab, branches, proteção, GitFlow, SonarQube | `uds_gitlab_standards` |
-| Auditoria de código, análise profunda de codebase | `code_auditor` (campo `codebase` obrigatório) |
-| Revisão técnica de feature, auditoria de feature | `feature_review` (campo `codebase` obrigatório) |
-| Bugs em sistemas distribuídos, race conditions, idempotência | `distributed_system_bug_hunter` (campo `codebase` obrigatório) |
-| Estratégia de testes, cobertura, pirâmide de testes | `test_strategy_guide` |
-| Quality gates de teste, métricas obrigatórias | `test_quality_gates` |
-| Checklist de code review para testes | `test_code_review_checklist` |
-| Documentar conhecimento, lições aprendidas | `knowledge_documentation` |
-| Regras de dados mocados/fake | `uds_no_mock_data` |
-| Modo autônomo, regras de execução contínua | `uds_autonomous_mode` |
-| Otimização de tokens, contexto mínimo | `uds_token_optimization` |
-| Health check do MCP server | `mcp_health_check` |
-| Informações AWS do MCP server | `mcp_aws_info` |
-| Testar conectividade MCP | `mcp_echo` |
-| Port forwarding SSM para EC2 | `ssm_session_port_forwarding` |
+| Intenção | Tool | Tipo |
+|---|---|---|
+| Padrões de código, code review, arquitetura, segurança, performance | `uds_code_analysis` | static-data |
+| Padrões de projeto, CI/CD, documentação, error handling, logging, Docker, AWS | `uds_dev_standards` | static-data |
+| Layout, UI, componentes, frontend, mobile, Atomic Design, acessibilidade | `uds_layout_standards` | static-data |
+| GitLab, branches, proteção, GitFlow, SonarQube | `uds_gitlab_standards` | static-data |
+| Regras de proibição de dados mocados/fake | `uds_no_mock_data` | static-data |
+| Regras de execução autônoma | `uds_autonomous_mode` | static-data |
+| Otimização de tokens e contexto | `uds_token_optimization` | static-data |
+| Estratégia de testes, cobertura, pirâmide | `test_strategy_guide` | bedrock-prompt |
+| Quality gates de teste, métricas obrigatórias | `test_quality_gates` | static-data |
+| Checklist de code review para testes | `test_code_review_checklist` | bedrock-prompt |
+| Auditoria profunda de código (7 passes, Claude Opus) | `code_auditor` | bedrock-prompt |
+| Revisão técnica detalhada de feature | `feature_review` | bedrock-prompt |
+| Bugs em sistemas distribuídos, race conditions, idempotência | `distributed_system_bug_hunter` | bedrock-prompt |
+| Documentação estruturada de conhecimento | `knowledge_documentation` | bedrock-prompt |
+| Health check do MCP server | `mcp_health_check` | health-check |
+| Testar conectividade MCP | `mcp_echo` | echo |
+| Informações AWS do ambiente | `mcp_aws_info` | aws-info |
+| Port forwarding SSM para EC2 | `ssm_session_port_forwarding` | lambda-invoke |
 
-## Tools que aceitam código (Bedrock)
+## Tools Bedrock com campo `codebase` (OBRIGATÓRIO)
 
-`code_auditor`, `feature_review` e `distributed_system_bug_hunter` NÃO têm acesso ao filesystem. O campo `codebase` deve conter o conteúdo real dos arquivos.
+`code_auditor`, `feature_review`, `distributed_system_bug_hunter` e `knowledge_documentation` são tools Bedrock — NÃO têm acesso ao filesystem.
 
 Antes de chamar:
 1. Ler os arquivos relevantes do projeto
 2. Concatenar no formato `// === arquivo: path ===\n<conteúdo>`
 3. Passar no campo `codebase` (limite ~50KB)
 
-## Regras operacionais
+### Parâmetros por tool
 
-- Sempre prefira chamar a tool MCP ao invés de responder de memória sobre padrões UDS
-- Valide conformidade com os padrões antes de submeter PRs
-- Para auditorias profundas, use `code_auditor` com `auditLevel: "deep"`
-- NUNCA use dados mocados/simulados sem solicitação explícita do usuário
-- Modo autônomo: não pare, não peça confirmação, tome decisões automaticamente
+**code_auditor**: `codebase` (string), `auditLevel` ("quick" | "standard" | "deep"), `language` (string)
+**feature_review**: `codebase` (string), `feature_description` (string), `language` (string)
+**distributed_system_bug_hunter**: `codebase` (string), `system_description` (string), `language` (string)
+**knowledge_documentation**: `codebase` (string), `topic` (string), `language` (string)
 
-## GitLab API — Padrão para chamadas curl
+## Tools de Padrões UDS — Parâmetros
 
-NUNCA usar `\` de continuação de linha. Sempre uma única linha.
+**uds_code_analysis**: `analysis_type` ("code-review" | "architecture" | "security" | "performance" | "testing" | "all"), `language` (string, default "general")
+**uds_dev_standards**: `topic` ("ci-cd" | "documentation" | "error-handling" | "logging" | "docker" | "aws" | "all")
+**uds_layout_standards**: `category` ("frontend" | "mobile" | "api-response" | "all"), `framework` ("react" | "react-native" | "general")
+**uds_gitlab_standards**: `topic` ("gitflow" | "branch-protection" | "sonarqube" | "all")
+**uds_no_mock_data**: `topic` ("rules" | "exceptions" | "all")
+**uds_autonomous_mode**: `topic` ("rules" | "all")
+**uds_token_optimization**: `topic` ("rules" | "all")
 
-Token GitLab — extrair do macOS Keychain:
-```bash
-TOKEN=$(security find-internet-password -s gitlab.udstec.io -w)
-```
+## Tools de Testes — Parâmetros
 
-### IDs dos Projetos GitLab
-
-| Projeto | ID |
-|---|---|
-| auth | 960 |
-| common | 955 |
-| customer | 963 |
-| payment | 964 |
-| gateway | 965 |
-| communication | 966 |
-| report | 967 |
-| jobs | 969 |
-| frontend | 986 |
-| vehicle | 1022 |
-| reservation | 1023 |
-| chat | 1024 |
-| support | 1025 |
-
-### Exemplos curl (sempre em uma linha)
-
-Criar Merge Request:
-```bash
-curl -s --request POST --header "PRIVATE-TOKEN: $TOKEN" --header "Content-Type: application/json" -d '{"source_branch":"feature/x","target_branch":"develop","title":"feat: description","remove_source_branch":true}' "https://gitlab.udstec.io/api/v4/projects/PROJECT_ID/merge_requests"
-```
-
-Merge automático de MR:
-```bash
-curl -s --request PUT --header "PRIVATE-TOKEN: $TOKEN" "https://gitlab.udstec.io/api/v4/projects/PROJECT_ID/merge_requests/MR_IID/merge"
-```
-
-Listar MRs abertos:
-```bash
-curl -s --header "PRIVATE-TOKEN: $TOKEN" "https://gitlab.udstec.io/api/v4/projects/PROJECT_ID/merge_requests?state=opened"
-```
-
-Listar branches:
-```bash
-curl -s --header "PRIVATE-TOKEN: $TOKEN" "https://gitlab.udstec.io/api/v4/projects/PROJECT_ID/repository/branches"
-```
+**test_strategy_guide**: `project_type` (string), `language` (string), `framework` (string)
+**test_quality_gates**: `topic` ("metrics" | "coverage" | "all")
+**test_code_review_checklist**: `codebase` (string), `language` (string)
