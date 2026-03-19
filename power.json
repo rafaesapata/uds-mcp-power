@@ -1,0 +1,31 @@
+{
+  "name": "uds-mcp-server",
+  "displayName": "UDS MCP Server",
+  "version": "2.0.0",
+  "description": "Padrões de layout, análise de código e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
+  "keywords": [
+    "uds",
+    "padrões",
+    "layout",
+    "código",
+    "análise",
+    "desenvolvimento",
+    "frontend",
+    "backend",
+    "react",
+    "mobile",
+    "segurança",
+    "performance",
+    "testes",
+    "ci-cd",
+    "docker",
+    "aws"
+  ],
+  "author": "UDS Tecnologia",
+  "mcpServers": {
+    "uds-mcp-server": {
+      "type": "http",
+      "url": "https://server.mcp.udstec.io/mcp"
+    }
+  }
+}
