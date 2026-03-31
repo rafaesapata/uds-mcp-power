@@ -25,20 +25,20 @@ inclusion: auto
 | Estratégia de testes, cobertura, pirâmide | `test_strategy_guide` | bedrock-prompt |
 | Quality gates de teste, métricas obrigatórias | `test_quality_gates` | static-data |
 | Checklist de code review para testes | `test_code_review_checklist` | bedrock-prompt |
-| Auditoria profunda de código (7 passes, Claude Opus) | `code_auditor` | bedrock-prompt |
-| Revisão técnica detalhada de feature | `feature_review` | bedrock-prompt |
-| Bugs em sistemas distribuídos, race conditions, idempotência | `distributed_system_bug_hunter` | bedrock-prompt |
-| Documentação estruturada de conhecimento | `knowledge_documentation` | bedrock-prompt |
+| Auditoria profunda de código (7 passes, Claude Opus) | `code-auditor` | bedrock-prompt |
+| Revisão técnica detalhada de feature | `feature-review` | bedrock-prompt |
+| Bugs em sistemas distribuídos, race conditions, idempotência | `distributed-system-bug-hunter` | bedrock-prompt |
+| Documentação estruturada de conhecimento | `knowledge-documentation` | bedrock-prompt |
 | Health check do MCP server | `mcp_health_check` | health-check |
 | Testar conectividade MCP | `mcp_echo` | echo |
 | Informações AWS do ambiente | `mcp_aws_info` | aws-info |
-| Port forwarding SSM para EC2 | `ssm_session_port_forwarding` | lambda-invoke |
 | Guia de uso atualizado (tools, prompts, parâmetros) | `get_steering_updates` | http-proxy |
-| Busca em documentos internos (RFPs, manuais, processos, contratos) | `knowledge_search` | bedrock-knowledge-base |
+| Busca em documentos internos (RFPs, manuais, processos, contratos) | `knowledge-search` | bedrock-knowledge-base |
+| Registrar atividade do agente | `report_activity` | activity-log |
 
 ## Tools Bedrock com campo `codebase` (OBRIGATÓRIO)
 
-`code_auditor`, `feature_review`, `distributed_system_bug_hunter` e `knowledge_documentation` são tools Bedrock — NÃO têm acesso ao filesystem.
+`code-auditor`, `feature-review`, `distributed-system-bug-hunter` e `knowledge-documentation` são tools Bedrock — NÃO têm acesso ao filesystem.
 
 Antes de chamar:
 1. Ler os arquivos relevantes do projeto
@@ -47,10 +47,10 @@ Antes de chamar:
 
 ### Parâmetros por tool
 
-**code_auditor**: `codebase` (string), `auditLevel` ("quick" | "standard" | "deep"), `language` (string)
-**feature_review**: `codebase` (string), `feature_description` (string), `language` (string)
-**distributed_system_bug_hunter**: `codebase` (string), `system_description` (string), `language` (string)
-**knowledge_documentation**: `codebase` (string), `topic` (string), `language` (string)
+**code-auditor**: `codebase` (string), `auditLevel` ("quick" | "standard" | "deep"), `language` (string)
+**feature-review**: `codebase` (string), `feature_description` (string), `language` (string)
+**distributed-system-bug-hunter**: `codebase` (string), `system_description` (string), `language` (string)
+**knowledge-documentation**: `codebase` (string), `topic` (string), `language` (string)
 
 ## Tools de Padrões UDS — Parâmetros
 
@@ -64,13 +64,13 @@ Antes de chamar:
 
 ## Tools de Testes — Parâmetros
 
-**test_strategy_guide**: `project_type` (string), `language` (string), `framework` (string)
-**test_quality_gates**: `topic` ("metrics" | "coverage" | "all")
-**test_code_review_checklist**: `codebase` (string), `language` (string)
+**test-strategy-guide**: `project_type` (string), `language` (string), `framework` (string)
+**test-quality-gates**: `topic` ("metrics" | "coverage" | "all")
+**test-code-review-checklist**: `codebase` (string), `language` (string)
 
 ## Knowledge Base — Busca em Documentos
 
-**knowledge_search**: `query` (string) — Busca semântica na base de conhecimento. Use quando o usuário perguntar sobre projetos, clientes, RFPs, propostas, documentos internos ou qualquer informação que possa estar em arquivos indexados. Retorna trechos relevantes com resposta gerada por IA.
+**knowledge-search**: `query` (string) — Busca semântica na base de conhecimento. Use quando o usuário perguntar sobre projetos, clientes, RFPs, propostas, documentos internos ou qualquer informação que possa estar em arquivos indexados. Retorna trechos relevantes com resposta gerada por IA.
 
 ## Prompts MCP — Auto-discovery
 

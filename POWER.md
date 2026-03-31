@@ -34,18 +34,18 @@ O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui 
 - `uds_token_optimization` — Otimização de tokens e contexto
 
 ### Testes
-- `test_strategy_guide` — Estratégia de testes via Bedrock (bedrock-prompt)
-- `test_quality_gates` — Métricas obrigatórias de qualidade (static-data)
-- `test_code_review_checklist` — Checklist de review para testes (bedrock-prompt)
+- `test-strategy-guide` — Estratégia de testes via Bedrock (bedrock-prompt)
+- `test-quality-gates` — Métricas obrigatórias de qualidade (static-data)
+- `test-code-review-checklist` — Checklist de review para testes (bedrock-prompt)
 
 ### Análise de Código (bedrock-prompt)
-- `code_auditor` — Auditoria profunda com metodologia de 7 passes (usa Claude Opus)
-- `feature_review` — Revisão técnica detalhada de feature
-- `distributed_system_bug_hunter` — Caça bugs em sistemas distribuídos
-- `knowledge_documentation` — Gera documentação estruturada de conhecimento
+- `code-auditor` — Auditoria profunda com metodologia de 7 passes (usa Claude Opus)
+- `feature-review` — Revisão técnica detalhada de feature
+- `distributed-system-bug-hunter` — Caça bugs em sistemas distribuídos
+- `knowledge-documentation` — Gera documentação estruturada de conhecimento
 
 ### Knowledge Base
-- `knowledge_search` — Busca semântica em documentos internos (RFPs, manuais, processos, contratos)
+- `knowledge-search` — Busca semântica em documentos internos (RFPs, manuais, processos, contratos)
 
 ### Activity Tracking
 - `report_activity` — Registra atividades do agente (file-edit, session-summary, etc.)
@@ -58,7 +58,7 @@ O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui 
 
 ## Tools com campo `codebase`
 
-`code_auditor`, `feature_review` e `distributed_system_bug_hunter` são tools Bedrock — NÃO têm acesso ao filesystem. Antes de chamá-las:
+`code-auditor`, `feature-review` e `distributed-system-bug-hunter` são tools Bedrock — NÃO têm acesso ao filesystem. Antes de chamá-las:
 
 1. Leia os arquivos relevantes do projeto
 2. Concatene no formato `// === arquivo: path ===\n<conteúdo>`

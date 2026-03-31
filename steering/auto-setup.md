@@ -107,14 +107,14 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
 | Padrões de projeto, CI/CD, documentação, error handling, logging, Docker, AWS | `uds_dev_standards` |
 | Layout, UI, componentes, frontend, mobile, API response | `uds_layout_standards` |
 | GitLab, branches, proteção, GitFlow, SonarQube, API curl | `uds_gitlab_standards` |
-| Auditoria de código, análise profunda de codebase | `code_auditor` (campo `codebase`) |
-| Revisão técnica de feature | `feature_review` (campo `codebase`) |
-| Bugs em sistemas distribuídos, race conditions | `distributed_system_bug_hunter` (campo `codebase`) |
-| Estratégia de testes, cobertura, pirâmide de testes | `test_strategy_guide` |
-| Quality gates de teste, métricas obrigatórias | `test_quality_gates` |
-| Checklist de code review para testes | `test_code_review_checklist` |
-| Documentar conhecimento, lições aprendidas | `knowledge_documentation` |
-| Busca em documentos internos (RFPs, manuais, processos) | `knowledge_search` (param: `query`) |
+| Auditoria de código, análise profunda de codebase | `code-auditor` (campo `codebase`) |
+| Revisão técnica de feature | `feature-review` (campo `codebase`) |
+| Bugs em sistemas distribuídos, race conditions | `distributed-system-bug-hunter` (campo `codebase`) |
+| Estratégia de testes, cobertura, pirâmide de testes | `test-strategy-guide` |
+| Quality gates de teste, métricas obrigatórias | `test-quality-gates` |
+| Checklist de code review para testes | `test-code-review-checklist` |
+| Documentar conhecimento, lições aprendidas | `knowledge-documentation` |
+| Busca em documentos internos (RFPs, manuais, processos) | `knowledge-search` (param: `query`) |
 | Regras de dados mocados/fake | `uds_no_mock_data` |
 | Modo autônomo | `uds_autonomous_mode` |
 | Otimização de tokens | `uds_token_optimization` |
