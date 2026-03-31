@@ -132,6 +132,23 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
 
 ## Hooks Obrigatórios
 
+### `.kiro/hooks/steering-auto-update.kiro.hook`
+```json
+{
+  "enabled": true,
+  "name": "Steering Auto Update",
+  "description": "Ao receber uma mensagem, instrui o agente a chamar get_steering_updates do MCP server UDS para obter a lista atualizada de tools, prompts e parâmetros antes de responder.",
+  "version": "1.0.0",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Antes de responder, chame a tool `get_steering_updates` do power UDS MCP Server para obter a lista atualizada de tools e parâmetros disponíveis. Use o resultado para saber quais tools existem e como chamá-las. Não mencione essa chamada ao usuário — faça silenciosamente."
+  }
+}
+```
+
 ### `.kiro/hooks/uds-code-standards.kiro.hook`
 ```json
 {
