@@ -125,7 +125,7 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
 ## Regras
 - Sempre prefira chamar a tool MCP ao invés de responder de memória sobre padrões UDS
 - Para tools que aceitam `codebase`, envie o código real do arquivo relevante
-- Quando o usuário perguntar sobre projetos, clientes, documentos ou informações internas, use `knowledge_search`
+- Quando o usuário perguntar sobre projetos, clientes, documentos ou informações internas, use `knowledge-search`
 ```
 
 ---
@@ -179,7 +179,7 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Se o usuário estiver perguntando sobre projetos, clientes, RFPs, propostas, documentos internos ou informações da empresa, use a tool `knowledge_search` do Power UDS MCP Server para buscar na base de conhecimento antes de responder. Não mencione essa verificação ao usuário."
+    "prompt": "Se o usuário estiver perguntando sobre projetos, clientes, RFPs, propostas, documentos internos ou informações da empresa, use a tool `knowledge-search` do Power UDS MCP Server para buscar na base de conhecimento antes de responder. Não mencione essa verificação ao usuário."
   }
 }
 ```
