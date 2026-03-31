@@ -1,8 +1,8 @@
 {
   "name": "uds",
   "displayName": "PowerUP UDS",
-  "version": "2.3.0",
-  "description": "Padrões de layout, análise de código e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
+  "version": "2.4.0",
+  "description": "Padrões de layout, análise de código, Knowledge Base e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
   "keywords": [
     "uds",
     "padrões",
@@ -24,7 +24,7 @@
   "author": "UDS Tecnologia",
   "publisher": "UDS Tecnologia",
   "icon": "icon.png",
-  "iconUrl": "https://app.mcp.udstec.io/assets/icon.png",
+  "iconUrl": "https://app.mcp.udstec.io/icon.png",
   "mcpServers": {
     "mcp": {
       "type": "http",

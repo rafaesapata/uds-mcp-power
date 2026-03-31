@@ -1,7 +1,7 @@
 ---
 name: "uds"
-displayName: "Power-UDS"
-description: "Padrões de código, layout, testes e análise inteligente da UDS Tecnologia — 18 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos e guias de CI/CD, Docker e AWS"
+displayName: "PowerUP UDS"
+description: "Padrões de código, layout, testes e análise inteligente da UDS Tecnologia — 20 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos, Knowledge Base e guias de CI/CD, Docker e AWS"
 keywords: ["uds", "padrões", "layout", "código", "análise", "desenvolvimento", "frontend", "backend", "react", "mobile", "segurança", "performance", "testes", "ci-cd", "docker", "aws"]
 ---
 
@@ -18,13 +18,17 @@ Para ambientes sem navegador (CI, SSH), use o setup legado:
 bash setup.sh --legacy <email> <senha>
 ```
 
-## Tools Disponíveis (18)
+## Auto-Setup de Hooks e Steerings
+
+O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui o agente a verificar e criar automaticamente os hooks e steerings obrigatórios no workspace `.kiro/` na primeira interação de cada sessão. Isso garante que a instalação seja determinística e consistente, sem depender de execução manual do `setup.sh`.
+
+## Tools Disponíveis (20)
 
 ### Padrões UDS (static-data)
 - `uds_code_analysis` — Code review, arquitetura, segurança, performance, testes
 - `uds_dev_standards` — CI/CD, documentação, error handling, logging, Docker, AWS
 - `uds_layout_standards` — Layout, UI, Atomic Design, acessibilidade, responsividade
-- `uds_gitlab_standards` — GitFlow, proteção de branches, SonarQube
+- `uds_gitlab_standards` — GitFlow, proteção de branches, SonarQube, API curl com IDs de projetos
 - `uds_no_mock_data` — Regras de proibição de dados mocados
 - `uds_autonomous_mode` — Regras de execução autônoma
 - `uds_token_optimization` — Otimização de tokens e contexto
@@ -40,11 +44,17 @@ bash setup.sh --legacy <email> <senha>
 - `distributed_system_bug_hunter` — Caça bugs em sistemas distribuídos
 - `knowledge_documentation` — Gera documentação estruturada de conhecimento
 
+### Knowledge Base
+- `knowledge_search` — Busca semântica em documentos internos (RFPs, manuais, processos, contratos)
+
+### Activity Tracking
+- `report_activity` — Registra atividades do agente (file-edit, session-summary, etc.)
+
 ### Utilitários
 - `mcp_health_check` — Status do servidor
 - `mcp_echo` — Teste de conectividade
 - `mcp_aws_info` — Informações do ambiente AWS
-- `ssm_session_port_forwarding` — Port forwarding via SSM para EC2
+- `get_steering_updates` — Guia de uso atualizado (tools, prompts, parâmetros)
 
 ## Tools com campo `codebase`
 
@@ -58,6 +68,17 @@ bash setup.sh --legacy <email> <senha>
 - Admin Panel: https://app.mcp.udstec.io
 - MCP Endpoint: https://server.mcp.udstec.io/mcp
 - Admin API: https://api.mcp.udstec.io
+
+## Prompts MCP
+
+O servidor MCP também disponibiliza prompts — templates reutilizáveis para interações com LLMs. Prompts são registrados dinamicamente a partir do DynamoDB e podem ser criados via importação ou admin panel.
+
+Para descobrir os prompts disponíveis, use `list_prompts`. Para usar um prompt, chame `get_prompt` com o nome e argumentos necessários.
+
+## Repositórios
+
+- **Power (público)**: https://github.com/rafaesapata/uds-mcp-power — Contém APENAS os arquivos do Power (POWER.md, power.json, mcp.json, setup.sh, steering/)
+- **MCP Server (privado)**: https://gitlab.udstec.io/rafael/mcp-server — Código do servidor MCP, admin panel, admin API e infra CDK
 
 ## Troubleshooting
 
