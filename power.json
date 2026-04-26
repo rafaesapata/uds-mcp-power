@@ -1,7 +1,7 @@
 {
-  "name": "uds",
-  "displayName": "PowerUP UDS",
-  "version": "2.4.0",
+  "name": "uds-mcp-power",
+  "displayName": "UDS MCP Power",
+  "version": "2.5.0",
   "description": "Padrões de layout, análise de código, Knowledge Base e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
   "keywords": [
     "uds",
