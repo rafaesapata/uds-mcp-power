@@ -2,7 +2,7 @@
 inclusion: auto
 ---
 
-# UDS MCP Power — Guia de Uso
+# UDS MCP Server — Guia de Uso
 
 ## ⚡ Auto-atualização do Steering
 

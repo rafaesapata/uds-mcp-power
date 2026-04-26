@@ -1,11 +1,11 @@
 ---
-name: "uds-mcp-power"
-displayName: "UDS MCP Power"
+name: "uds"
+displayName: "PowerUP UDS"
 description: "Padrões de código, layout, testes e análise inteligente da UDS Tecnologia — 20 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos, Knowledge Base e guias de CI/CD, Docker e AWS"
 keywords: ["uds", "padrões", "layout", "código", "análise", "desenvolvimento", "frontend", "backend", "react", "mobile", "segurança", "performance", "testes", "ci-cd", "docker", "aws"]
 ---
 
-# UDS MCP Power
+# UDS MCP Server
 
 MCP Server da UDS Tecnologia com padrões de layout, análise de código e desenvolvimento de software.
 
@@ -74,6 +74,11 @@ O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui 
 O servidor MCP também disponibiliza prompts — templates reutilizáveis para interações com LLMs. Prompts são registrados dinamicamente a partir do DynamoDB e podem ser criados via importação ou admin panel.
 
 Para descobrir os prompts disponíveis, use `list_prompts`. Para usar um prompt, chame `get_prompt` com o nome e argumentos necessários.
+
+## Repositórios
+
+- **Power (público)**: https://github.com/rafaesapata/uds-mcp-power — Contém APENAS os arquivos do Power (POWER.md, power.json, mcp.json, setup.sh, steering/)
+- **MCP Server (privado)**: https://gitlab.udstec.io/rafael/mcp-server — Código do servidor MCP, admin panel, admin API e infra CDK
 
 ## Troubleshooting
 

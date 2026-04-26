@@ -2,14 +2,14 @@
   <img src="https://app.mcp.udstec.io/icon.png" width="120" alt="UDS MCP Power" />
 </p>
 
-<h1 align="center">UDS MCP Power</h1>
+<h1 align="center">PowerUP UDS</h1>
 
 <p align="center">
   Kiro Power com 20 tools MCP para padrões de código, layout, testes, análise inteligente e Knowledge Base da UDS Tecnologia.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2.5.0-blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-2.4.0-blue" alt="Version" />
   <img src="https://img.shields.io/badge/tools-20-green" alt="Tools" />
   <img src="https://img.shields.io/badge/platform-Kiro-purple" alt="Platform" />
   <img src="https://img.shields.io/badge/MCP-Model%20Context%20Protocol-orange" alt="MCP" />
@@ -79,11 +79,19 @@ bash setup.sh --legacy <email> <senha>
 | `test_quality_gates` | Métricas obrigatórias | static-data |
 | `test_code_review_checklist` | Checklist de review | bedrock-prompt |
 
-### Knowledge Base / Activity / Utilitários
+### Knowledge Base
 | Tool | Descrição | Tipo |
 |------|-----------|------|
 | `knowledge_search` | Busca semântica em documentos internos | bedrock-knowledge-base |
+
+### Activity Tracking
+| Tool | Descrição | Tipo |
+|------|-----------|------|
 | `report_activity` | Registra atividades do agente | activity-log |
+
+### Utilitários
+| Tool | Descrição | Tipo |
+|------|-----------|------|
 | `mcp_health_check` | Status do servidor | health-check |
 | `mcp_echo` | Teste de conectividade | echo |
 | `mcp_aws_info` | Informações do ambiente AWS | aws-info |
@@ -101,11 +109,11 @@ O Power inclui um steering de auto-setup que, na primeira interação de cada se
 
 **Hooks** (`.kiro/hooks/`):
 - `steering-auto-update` — Atualiza lista de tools a cada mensagem
-- `uds-mcp-knowledge-search` — Busca na KB quando relevante
-- `uds-mcp-activity-tool-write` — Tracking de edições
-- `uds-mcp-activity-session-end` — Resumo de sessão
-- `uds-mcp-code-standards` — Verificação de padrões ao salvar (desabilitado por padrão)
-- `uds-mcp-pre-write-review` — Review antes de escrever (desabilitado por padrão)
+- `uds-knowledge-search` — Busca na KB quando relevante
+- `uds-activity-tool-write` — Tracking de edições
+- `uds-activity-session-end` — Resumo de sessão
+- `uds-code-standards` — Verificação de padrões ao salvar (desabilitado por padrão)
+- `uds-pre-write-review` — Review antes de escrever (desabilitado por padrão)
 
 ## Tools Bedrock — Campo `codebase`
 
@@ -113,7 +121,7 @@ O Power inclui um steering de auto-setup que, na primeira interação de cada se
 
 1. Ler os arquivos relevantes do projeto
 2. Concatenar no formato `// === arquivo: path ===\n<conteúdo>`
-3. Passe no campo `codebase` (limite ~50KB)
+3. Passar no campo `codebase` (limite ~50KB)
 
 ## Arquitetura
 
@@ -146,6 +154,12 @@ O Power usa OAuth 2.1 nativo. Na primeira utilização:
 2. Você faz login com suas credenciais UDS
 3. Uma API key é gerada e salva automaticamente
 4. O header `x-api-key` é configurado no `mcp.json` do Kiro
+
+A API key é salva em:
+- Variável de ambiente `MCP_API_KEY`
+- Shell profile (`~/.zshrc` ou `~/.bashrc`)
+- `launchctl` (macOS, para apps GUI)
+- `~/.kiro/settings/mcp.json`
 
 ## Troubleshooting
 
