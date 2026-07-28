@@ -1,15 +1,16 @@
 ---
 inclusion: auto
+description: "Guia de uso do NPower MCP Server — tools, prompts, parâmetros e auto-atualização"
 ---
 
-# UDS MCP Server — Guia de Uso
+# NPower MCP Server — Guia de Uso
 
 ## ⚡ Auto-atualização do Steering
 
 **IMPORTANTE**: No início de cada sessão, chame a tool `get_steering_updates` para obter a lista atualizada de tools, prompts e parâmetros disponíveis. O conteúdo abaixo pode estar desatualizado — a tool sempre retorna a versão mais recente do servidor.
 
 ## Repositório
-- GitHub: https://github.com/rafaesapata/uds-mcp-power
+- GitHub: https://github.com/rafaesapata/npower-mcp
 
 ## Quando usar cada tool
 
@@ -33,6 +34,7 @@ inclusion: auto
 | Testar conectividade MCP | `mcp_echo` | echo |
 | Informações AWS do ambiente | `mcp_aws_info` | aws-info |
 | Guia de uso atualizado (tools, prompts, parâmetros) | `get_steering_updates` | http-proxy |
+| Gerar mapa arquitetural do projeto (steering auto) | `generate_architecture_map` | bedrock-prompt |
 | Busca em documentos internos (RFPs, manuais, processos, contratos) | `knowledge-search` | bedrock-knowledge-base |
 | Registrar atividade do agente | `report_activity` | activity-log |
 
@@ -52,7 +54,7 @@ Antes de chamar:
 **distributed-system-bug-hunter**: `codebase` (string), `system_description` (string), `language` (string)
 **knowledge-documentation**: `codebase` (string), `topic` (string), `language` (string)
 
-## Tools de Padrões UDS — Parâmetros
+## Tools de Padrões NPower — Parâmetros
 
 **uds_code_analysis**: `analysis_type` ("code-review" | "architecture" | "security" | "performance" | "testing" | "all"), `language` (string, default "general")
 **uds_dev_standards**: `topic` ("ci-cd" | "documentation" | "error-handling" | "logging" | "docker" | "aws" | "all")

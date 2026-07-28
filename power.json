@@ -1,10 +1,10 @@
 {
-  "name": "uds",
-  "displayName": "PowerUP UDS",
-  "version": "2.4.0",
-  "description": "Padrões de layout, análise de código, Knowledge Base e desenvolvimento da UDS Tecnologia via MCP Server na AWS",
+  "name": "npower",
+  "displayName": "NPower",
+  "version": "2.5.0",
+  "description": "Padrões de layout, análise de código, Knowledge Base e desenvolvimento da NuevaCore via MCP Server na AWS",
   "keywords": [
-    "uds",
+    "npower",
     "padrões",
     "layout",
     "código",
@@ -21,8 +21,8 @@
     "docker",
     "aws"
   ],
-  "author": "UDS Tecnologia",
-  "publisher": "UDS Tecnologia",
+  "author": "NuevaCore",
+  "publisher": "NuevaCore",
   "icon": "icon.png",
   "iconUrl": "https://app.mcp.udstec.io/icon.png",
   "mcpServers": {

@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://app.mcp.udstec.io/icon.png" width="120" alt="UDS MCP Power" />
+  <img src="https://app.mcp.udstec.io/icon.png" width="120" alt="NPower" />
 </p>
 
-<h1 align="center">PowerUP UDS</h1>
+<h1 align="center">NPower</h1>
 
 <p align="center">
-  Kiro Power com 20 tools MCP para padrões de código, layout, testes, análise inteligente e Knowledge Base da UDS Tecnologia.
+  Kiro Power com 20 tools MCP para padrões de código, layout, testes, análise inteligente e Knowledge Base da NuevaCore.
 </p>
 
 <p align="center">
@@ -19,9 +19,9 @@
 
 ## O que é
 
-Um [Kiro Power](https://kiro.dev) que conecta o agente de IA ao MCP Server da UDS Tecnologia, fornecendo:
+Um [Kiro Power](https://kiro.dev) que conecta o agente de IA ao MCP Server da NuevaCore, fornecendo:
 
-- Padrões de código, layout e arquitetura da UDS
+- Padrões de código, layout e arquitetura da NuevaCore
 - Auditoria de código com Claude Opus (7 passes de análise)
 - Caça de bugs em sistemas distribuídos
 - Busca semântica em documentos internos (Knowledge Base)
@@ -35,14 +35,14 @@ Um [Kiro Power](https://kiro.dev) que conecta o agente de IA ao MCP Server da UD
 
 1. Abra o Kiro
 2. Vá em Powers → Install from file
-3. Selecione o arquivo `uds-mcp-power.zip` (disponível em [app.mcp.udstec.io](https://app.mcp.udstec.io))
+3. Selecione o arquivo `npower-mcp.zip` (disponível em [app.mcp.udstec.io](https://app.mcp.udstec.io))
 4. Na primeira interação, o Kiro abre o navegador para autenticação OAuth
 
 ### Manual
 
 ```bash
-git clone https://github.com/rafaesapata/uds-mcp-power.git
-cd uds-mcp-power
+git clone https://github.com/rafaesapata/npower-mcp.git
+cd npower-mcp
 bash setup.sh
 ```
 
@@ -53,7 +53,7 @@ bash setup.sh --legacy <email> <senha>
 
 ## Tools Disponíveis (20)
 
-### Padrões UDS
+### Padrões NPower
 | Tool | Descrição | Tipo |
 |------|-----------|------|
 | `uds_code_analysis` | Code review, arquitetura, segurança, performance | static-data |
@@ -109,11 +109,11 @@ O Power inclui um steering de auto-setup que, na primeira interação de cada se
 
 **Hooks** (`.kiro/hooks/`):
 - `steering-auto-update` — Atualiza lista de tools a cada mensagem
-- `uds-knowledge-search` — Busca na KB quando relevante
-- `uds-activity-tool-write` — Tracking de edições
-- `uds-activity-session-end` — Resumo de sessão
-- `uds-code-standards` — Verificação de padrões ao salvar (desabilitado por padrão)
-- `uds-pre-write-review` — Review antes de escrever (desabilitado por padrão)
+- `npower-knowledge-search` — Busca na KB quando relevante
+- `npower-activity-tool-write` — Tracking de edições
+- `npower-activity-session-end` — Resumo de sessão
+- `npower-code-standards` — Verificação de padrões ao salvar (desabilitado por padrão)
+- `npower-pre-write-review` — Review antes de escrever (desabilitado por padrão)
 
 ## Tools Bedrock — Campo `codebase`
 
@@ -126,7 +126,7 @@ O Power inclui um steering de auto-setup que, na primeira interação de cada se
 ## Arquitetura
 
 ```
-uds-mcp-power/
+npower-mcp/
 ├── POWER.md              # Documentação do Power (lida pelo Kiro)
 ├── README.md             # Este arquivo
 ├── power.json            # Metadados (nome, versão, keywords)
@@ -134,7 +134,7 @@ uds-mcp-power/
 ├── setup.sh              # Setup OAuth + instalação manual
 ├── icon.png              # Ícone do Power
 └── steering/
-    ├── uds-standards.md  # Guia de uso com tabela de tools e parâmetros
+    ├── npower-standards.md  # Guia de uso com tabela de tools e parâmetros
     └── auto-setup.md     # Auto-instalação de hooks e steerings
 ```
 
@@ -151,7 +151,7 @@ uds-mcp-power/
 O Power usa OAuth 2.1 nativo. Na primeira utilização:
 
 1. O Kiro abre o navegador automaticamente
-2. Você faz login com suas credenciais UDS
+2. Você faz login com suas credenciais NuevaCore
 3. Uma API key é gerada e salva automaticamente
 4. O header `x-api-key` é configurado no `mcp.json` do Kiro
 
@@ -172,10 +172,10 @@ A API key é salva em:
 
 ## Licença
 
-Uso interno UDS Tecnologia.
+Uso interno NuevaCore.
 
 ---
 
 <p align="center">
-  Feito com ☕ pela <a href="https://uds.com.br">UDS Tecnologia</a>
+  Feito com ☕ pela <a href="https://uds.com.br">NuevaCore</a>
 </p>

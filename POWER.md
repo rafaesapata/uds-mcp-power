@@ -1,17 +1,17 @@
 ---
-name: "uds"
-displayName: "PowerUP UDS"
-description: "Padrões de código, layout, testes e análise inteligente da UDS Tecnologia — 20 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos, Knowledge Base e guias de CI/CD, Docker e AWS"
-keywords: ["uds", "padrões", "layout", "código", "análise", "desenvolvimento", "frontend", "backend", "react", "mobile", "segurança", "performance", "testes", "ci-cd", "docker", "aws"]
+name: "npower"
+displayName: "NPower"
+description: "Padrões de código, layout, testes e análise inteligente da NuevaCore — 20 tools incluindo code auditor com Claude Opus, bug hunter para sistemas distribuídos, Knowledge Base e guias de CI/CD, Docker e AWS"
+keywords: ["npower", "padrões", "layout", "código", "análise", "desenvolvimento", "frontend", "backend", "react", "mobile", "segurança", "performance", "testes", "ci-cd", "docker", "aws"]
 ---
 
-# UDS MCP Server
+# NPower MCP Server
 
-MCP Server da UDS Tecnologia com padrões de layout, análise de código e desenvolvimento de software.
+MCP Server da NuevaCore com padrões de layout, análise de código e desenvolvimento de software.
 
 ## Setup Inicial
 
-O power usa OAuth 2.1 nativo — ao instalar e usar pela primeira vez, o Kiro abre automaticamente o navegador para autenticação com suas credenciais UDS. Nenhum setup manual é necessário.
+O power usa OAuth 2.1 nativo — ao instalar e usar pela primeira vez, o Kiro abre automaticamente o navegador para autenticação com suas credenciais NuevaCore. Nenhum setup manual é necessário.
 
 Para ambientes sem navegador (CI, SSH), use o setup legado:
 ```bash
@@ -24,7 +24,7 @@ O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui 
 
 ## Tools Disponíveis (20)
 
-### Padrões UDS (static-data)
+### Padrões NPower (static-data)
 - `uds_code_analysis` — Code review, arquitetura, segurança, performance, testes
 - `uds_dev_standards` — CI/CD, documentação, error handling, logging, Docker, AWS
 - `uds_layout_standards` — Layout, UI, Atomic Design, acessibilidade, responsividade
@@ -74,11 +74,6 @@ O Power inclui um steering de auto-setup (`steering/auto-setup.md`) que instrui 
 O servidor MCP também disponibiliza prompts — templates reutilizáveis para interações com LLMs. Prompts são registrados dinamicamente a partir do DynamoDB e podem ser criados via importação ou admin panel.
 
 Para descobrir os prompts disponíveis, use `list_prompts`. Para usar um prompt, chame `get_prompt` com o nome e argumentos necessários.
-
-## Repositórios
-
-- **Power (público)**: https://github.com/rafaesapata/uds-mcp-power — Contém APENAS os arquivos do Power (POWER.md, power.json, mcp.json, setup.sh, steering/)
-- **MCP Server (privado)**: https://gitlab.udstec.io/rafael/mcp-server — Código do servidor MCP, admin panel, admin API e infra CDK
 
 ## Troubleshooting
 
