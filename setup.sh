@@ -366,7 +366,7 @@ inclusion: auto
 
 # NPower MCP Server — Guia de Tools
 
-Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP correspondente do Power NPower.
+Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP correspondente.
 
 ## Mapeamento de intenção → tool
 
@@ -383,7 +383,7 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
 | Quality gates de teste, métricas obrigatórias | `test_quality_gates` |
 | Checklist de code review para testes | `test_code_review_checklist` |
 | Documentar conhecimento, lições aprendidas | `knowledge_documentation` |
-| Busca em documentos internos (RFPs, manuais, processos) | `knowledge_search` (param: `query`) |
+| Busca em documentos internos (RFPs, manuais, processos) | `knowledge-search` (param: `query`) |
 | Regras de dados mocados/fake | `uds_no_mock_data` |
 | Modo autônomo | `uds_autonomous_mode` |
 | Otimização de tokens | `uds_token_optimization` |
@@ -394,102 +394,139 @@ Quando o usuário pedir algo relacionado aos tópicos abaixo, use a tool MCP cor
 ## Regras
 - Sempre prefira chamar a tool MCP ao invés de responder de memória sobre padrões NPower
 - Para tools que aceitam `codebase`, envie o código real do arquivo relevante
-- Quando o usuário perguntar sobre projetos, clientes, documentos ou informações internas, use `knowledge_search`
+- Quando o usuário perguntar sobre projetos, clientes, documentos ou informações internas, use `knowledge-search`
 STEERING_EOF
 echo "  ✅ steering/mcp-tools-guide.md"
 
+# ── Steering: Autenticação Entra ID (nunca PAT) ──
+cat > "$WORKSPACE_KIRO/steering/auth-entra-id.md" << 'STEERING_EOF'
+---
+inclusion: always
+---
+
+# Autenticação — Nunca PAT, Sempre Microsoft Entra ID
+
+Regra absoluta. Nenhum fluxo de PAT para Azure DevOps. Autenticação (runtime e
+`git push`/`git fetch`) usa Microsoft Entra ID. Não gere, não peça, não
+armazene, não leia PAT.
+
+## git push (remote Azure DevOps)
+Método que funciona: git-credential-manager em modo OAuth.
+```
+git config --global credential.helper manager
+git config --global credential.azreposCredentialType oauth
+git config --global credential.https://dev.azure.com.useHttpPath true
+```
+Armadilhas: token cru do `az account get-access-token` é rejeitado por
+Conditional Access (redirect 203/login); GCM em modo default tenta criar PAT e
+a org bloqueia (DisablePatCreationPolicyViolation) — por isso
+`azreposCredentialType=oauth` é obrigatório. Nunca persista token em arquivo
+versionado.
+STEERING_EOF
+echo "  ✅ steering/auth-entra-id.md"
+
 # ── Hook: Code Audit on File Save ──
-cat > "$WORKSPACE_KIRO/hooks/npower-code-standards.kiro.hook" << 'HOOK_EOF'
+cat > "$WORKSPACE_KIRO/hooks/npower-code-standards.json" << 'HOOK_EOF'
 {
-  "enabled": false,
-  "name": "NPower Code Standards Check",
-  "description": "Ao salvar arquivo .ts/.tsx/.js/.jsx, lembra o agente de verificar padrões NPower de código usando uds_code_analysis.",
-  "version": "1.0.0",
-  "when": {
-    "type": "fileEdited",
-    "patterns": ["*.ts", "*.tsx", "*.js", "*.jsx"]
-  },
-  "then": {
-    "type": "askAgent",
-    "prompt": "O arquivo foi editado. Se houver mudanças significativas, considere usar a tool `uds_code_analysis` do Power NPower para verificar se o código segue os padrões da NuevaCore (code review, segurança, performance). Faça isso silenciosamente e reporte apenas se encontrar problemas."
-  }
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "NPower Code Standards Check",
+      "description": "Ao salvar arquivo .ts/.tsx/.js/.jsx, verifica padrões NPower.",
+      "trigger": "PostFileSave",
+      "matcher": "([^/]*\\.ts$|[^/]*\\.tsx$|[^/]*\\.js$|[^/]*\\.jsx$)",
+      "action": {
+        "type": "agent",
+        "prompt": "O arquivo foi editado. Se houver mudanças significativas, considere usar a tool `uds_code_analysis` do NPower para verificar se o código segue os padrões da NuevaCore, e comente com o usuário caso encontre problemas relevantes."
+      },
+      "enabled": false
+    }
+  ]
 }
 HOOK_EOF
-echo "  ✅ hooks/npower-code-standards.kiro.hook (desabilitado por padrão)"
+echo "  ✅ hooks/npower-code-standards.json (desabilitado por padrão)"
 
 # ── Hook: Knowledge Search Reminder ──
-cat > "$WORKSPACE_KIRO/hooks/npower-knowledge-search.kiro.hook" << 'HOOK_EOF'
+cat > "$WORKSPACE_KIRO/hooks/npower-knowledge-search.json" << 'HOOK_EOF'
 {
-  "enabled": true,
-  "name": "NPower Knowledge Search",
-  "description": "Quando o usuário enviar uma mensagem, instrui o agente a considerar buscar na Knowledge Base da NuevaCore se a pergunta for sobre projetos, clientes ou documentos internos.",
-  "version": "1.0.0",
-  "when": {
-    "type": "promptSubmit"
-  },
-  "then": {
-    "type": "askAgent",
-    "prompt": "Se o usuário estiver perguntando sobre projetos, clientes, RFPs, propostas, documentos internos ou informações da empresa, use a tool `knowledge_search` do Power NPower MCP Server para buscar na base de conhecimento antes de responder. Não mencione essa verificação ao usuário."
-  }
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "NPower Knowledge Search",
+      "description": "Instrui o agente a buscar na Knowledge Base quando relevante.",
+      "trigger": "UserPromptSubmit",
+      "action": {
+        "type": "agent",
+        "prompt": "Se o usuário estiver perguntando sobre projetos, clientes, RFPs, propostas, documentos internos ou informações da empresa da UDS/NuevaCore, use a tool `knowledge-search` do NPower para buscar na base de conhecimento antes de responder. Pode citar naturalmente que consultou a base quando fizer sentido."
+      },
+      "enabled": true
+    }
+  ]
 }
 HOOK_EOF
-echo "  ✅ hooks/npower-knowledge-search.kiro.hook"
+echo "  ✅ hooks/npower-knowledge-search.json"
 
 # ── Hook: Pre-commit Code Audit ──
-cat > "$WORKSPACE_KIRO/hooks/npower-pre-write-review.kiro.hook" << 'HOOK_EOF'
+cat > "$WORKSPACE_KIRO/hooks/npower-pre-write-review.json" << 'HOOK_EOF'
 {
-  "enabled": false,
-  "name": "NPower Pre-Write Review",
-  "description": "Antes de escrever um arquivo, verifica se segue os padrões NPower.",
-  "version": "1.0.0",
-  "when": {
-    "type": "preToolUse",
-    "toolTypes": ["write"]
-  },
-  "then": {
-    "type": "askAgent",
-    "prompt": "Antes de escrever este arquivo, verifique se o código segue os padrões NPower: nomenclatura, estrutura, tratamento de erros, e boas práticas. Se necessário, consulte `uds_code_analysis` ou `uds_dev_standards`. Não bloqueie a escrita, apenas ajuste se necessário."
-  }
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "NPower Pre-Write Review",
+      "description": "Antes de escrever um arquivo, verifica padrões NPower.",
+      "trigger": "PreToolUse",
+      "matcher": "^(fs_write|fs_append|str_replace|delete_file|code)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Antes de escrever este arquivo, verifique se o código segue os padrões NPower: nomenclatura, estrutura, tratamento de erros e boas práticas. Se necessário, consulte `uds_code_analysis` ou `uds_dev_standards`. Não bloqueie a escrita, apenas ajuste se necessário."
+      },
+      "enabled": false
+    }
+  ]
 }
 HOOK_EOF
-echo "  ✅ hooks/npower-pre-write-review.kiro.hook (desabilitado por padrão)"
+echo "  ✅ hooks/npower-pre-write-review.json (desabilitado por padrão)"
 
 # ── Hook: Activity Tracking - Tool Write ──
-cat > "$WORKSPACE_KIRO/hooks/npower-activity-tool-write.kiro.hook" << 'HOOK_EOF'
+cat > "$WORKSPACE_KIRO/hooks/npower-activity-tool-write.json" << 'HOOK_EOF'
 {
-  "enabled": true,
-  "name": "NPower Activity - Track Tool Write",
-  "description": "Após cada operação de escrita, reporta a atividade para o MCP server via report_activity.",
-  "version": "1.0.0",
-  "when": {
-    "type": "postToolUse",
-    "toolTypes": ["write"]
-  },
-  "then": {
-    "type": "askAgent",
-    "prompt": "Uma operação de escrita foi concluída. Chame a tool `report_activity` do Power NPower MCP Server com eventType='file-edit' e details contendo o fileName do arquivo editado. Use o nome da API key como userId. Faça isso silenciosamente sem mencionar ao usuário."
-  }
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "NPower Activity - Track Tool Write",
+      "description": "Após uma operação de escrita, registra atividade via report_activity.",
+      "trigger": "PostToolUse",
+      "matcher": "^(fs_write|fs_append|str_replace|delete_file|code)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Uma operação de escrita foi concluída. Se relevante, chame a tool `report_activity` do NPower com eventType='file-edit' e details contendo o fileName do arquivo editado."
+      },
+      "enabled": false
+    }
+  ]
 }
 HOOK_EOF
-echo "  ✅ hooks/npower-activity-tool-write.kiro.hook"
+echo "  ✅ hooks/npower-activity-tool-write.json (desabilitado por padrão)"
 
 # ── Hook: Activity Tracking - Session Summary ──
-cat > "$WORKSPACE_KIRO/hooks/npower-activity-session-end.kiro.hook" << 'HOOK_EOF'
+cat > "$WORKSPACE_KIRO/hooks/npower-activity-session-end.json" << 'HOOK_EOF'
 {
-  "enabled": true,
-  "name": "NPower Activity - Session Summary",
-  "description": "Quando o agente para, reporta um resumo da sessão para o MCP server via report_activity.",
-  "version": "1.0.0",
-  "when": {
-    "type": "agentStop"
-  },
-  "then": {
-    "type": "askAgent",
-    "prompt": "A sessão do agente terminou. Chame a tool `report_activity` do Power NPower MCP Server com eventType='session-summary' e details contendo um resumo breve do que foi feito nesta sessão (arquivos editados, tarefas concluídas). Faça isso silenciosamente."
-  }
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "NPower Activity - Session Summary",
+      "description": "Quando o agente para, registra um resumo da sessão via report_activity (telemetria de produtividade).",
+      "trigger": "Stop",
+      "action": {
+        "type": "agent",
+        "prompt": "A sessão do agente terminou. Chame a tool `report_activity` do NPower com eventType='session-summary' e details contendo um resumo breve do que foi feito nesta sessão (arquivos editados, tarefas concluídas). É telemetria de produtividade da equipe — registre de forma transparente. Se a tool não estiver disponível, apenas siga em frente."
+      },
+      "enabled": true
+    }
+  ]
 }
 HOOK_EOF
-echo "  ✅ hooks/npower-activity-session-end.kiro.hook"
+echo "  ✅ hooks/npower-activity-session-end.json"
 
 echo ""
 echo "📋 Steering files instalados em $WORKSPACE_KIRO/steering/"
